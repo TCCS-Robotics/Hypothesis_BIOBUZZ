@@ -8,6 +8,7 @@ import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.PIDFCoefficients;
+import com.qualcomm.robotcore.hardware.Servo;
 
 public class RobotHardware {
     //DcMotorEx has extended capabilities like velocity control
@@ -28,16 +29,25 @@ public class RobotHardware {
     //Servos -  Format  - public Servo name; -for position based servo - or public CRServo name; - for Continuous servo
     public CRServo intakeLeft; //Left Intake Wheel
     public CRServo intakeRight; //Right Intake Wheel
+    public Servo SL; // Right side of Slider for Pollen/Nectar Sizer
+    public Servo SR; // Right side of Slider for Pollen/Nectar Sizer
 
 
     //Sensors   FORMAT public Sensor Type name;
     public GoBildaPinpointDriver odo;
-    //public Limelight3A limelight;  //Camera for April Tag Detection
+    public Limelight3A limelight;  //Camera for April Tag Detection
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
 ///                                   STATIC VARIABLES                                      ///
 //////////////////////////////////////////////////////////////////////////////////////////////
     public static final double flywheel_TICKS_PER_REV = 28.0;
+    public static final int flywheel_TARGET_VELOCITY = 1250;
+    public static final int flywheel_MIN_VELOCITY = 1200;
+
+
+    //Position for Servos for Pollen and Nectar
+    public static final double Nectar_Size = 0.48;
+    public static final double Pollen_Size = 0.27;
 
 
     //////////////////////////    INITIALIZE ALL HARDWARE    /////////////////////////////
@@ -63,11 +73,14 @@ public class RobotHardware {
         // Servos
         intakeLeft = hardwareMap.get(CRServo.class, "intakeLeft");
         intakeRight = hardwareMap.get(CRServo.class, "intakeRight");
+        SL = hardwareMap.get(Servo.class,"SL");
+        SR = hardwareMap.get(Servo.class,"SR");
+
 
 
         // Sensors
         odo = hardwareMap.get(GoBildaPinpointDriver.class, "odo");
-        //limelight = hardwareMap.get(Limelight3A.class, "limelight");
+        limelight = hardwareMap.get(Limelight3A.class, "limelight");
 
     ///////////////////////////////////////////////////////////////////////////////////////////////
     ///                                    CONFIGURATIONS                                       ///
@@ -90,7 +103,7 @@ public class RobotHardware {
 
 
         //////////////////////////    Flywheel Configurations   /////////////////////////////
-        flywheel.setDirection(DcMotorSimple.Direction.FORWARD);
+        flywheel.setDirection(DcMotorSimple.Direction.FORWARD); // NEED TO CONFIRM THIS DIRECTION
 
         //Set Brake Behavior - This allows the flywheel to gradually slow down instead of immediately breaking
         flywheel.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
@@ -139,7 +152,11 @@ public class RobotHardware {
 
 
         //////////////////    Shooter Pollen/Nectar Configurations   //////////////////////
+        SL.setDirection(Servo.Direction.FORWARD);
+        SR.setDirection(Servo.Direction.REVERSE);
 
+        SL.setPosition(Pollen_Size);  //Variables are up in static Variables
+        SR.setPosition(Pollen_Size);  //Variables are up in static Variables
 
 
 
