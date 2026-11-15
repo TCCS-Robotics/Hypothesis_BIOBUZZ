@@ -107,7 +107,7 @@ public class RobotHardware {
         intake.setDirection(DcMotorSimple.Direction.FORWARD);
 
         intakeLeft.setDirection(DcMotorSimple.Direction.FORWARD);
-        intakeLeft.setDirection(DcMotorSimple.Direction.REVERSE);
+        intakeRight.setDirection(DcMotorSimple.Direction.REVERSE);
 
         //initialize power for motor and servos
         intake.setPower(0);

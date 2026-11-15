@@ -68,6 +68,39 @@ public class Teleop extends OpMode {
             drive.driveFieldRelative(forward, right, rotate);
         }
 
+    ////////////////////////    Intake Controls - Game Pad 1       //////////////////////////if (ga,
+       if (gamepad1.b)  {
+           robot.intake.setPower(.75);
+           robot.intakeLeft.setPower(0.75);
+           robot.intakeRight.setPower(0.75);
+           robot.GeckoWheels.setPower(0.75);
+        }
+       else {
+           robot.intake.setPower(0);
+            robot.intakeLeft.setPower(0);
+            robot.intakeRight.setPower(0);
+            robot.GeckoWheels.setPower(0);
+       }
+        if (gamepad1.y ) {
+            robot.intake.setPower(-.75);
+            robot.intakeLeft.setPower(-0.75);
+            robot.intakeRight.setPower(-0.75);
+            robot.GeckoWheels.setPower(-0.75);
+        }
+        else{
+            robot.intake.setPower(0);
+            robot.intakeLeft.setPower(0);
+            robot.intakeRight.setPower(0);
+            robot.GeckoWheels.setPower(0);
+        }
+
+    ////////////////////////    Gecko Wheels Controls  - Game Pad 2     //////////////////////////
+
+    ////////////////////////    Turret Controls   - Game Pad 2     //////////////////////////
+
+    ////////////////////////    Shooter Controls    - Game Pad 2    //////////////////////////
+
+
 
     ////////////////////////    TELEMETRY        //////////////////////////
         telemetry.addLine("Press Back to reset Yaw");
