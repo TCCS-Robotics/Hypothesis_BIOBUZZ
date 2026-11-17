@@ -16,13 +16,13 @@ public class Servo_Calibration extends LinearOpMode {
     private Servo servo1;
     private Servo servo2;
 
-    private double servo1Position = 0.3;
+    private double servo1Position = 0.5;
     private double servo2Position = 0.3;
 
-    private static final double STEP = 0.01;
+    private static final double STEP = 0.05;
 
     // Set true if testing two servos
-    private boolean useServo2 = true;
+    private boolean useServo2 = false;
 
     // Direction settings
     private boolean servo1Reversed = false;
@@ -51,10 +51,10 @@ public class Servo_Calibration extends LinearOpMode {
         // HARDWARE INITIALIZATION
         // ==============================
 
-        servo1 = hardwareMap.get(Servo.class, "SL");
+        servo1 = hardwareMap.get(Servo.class, "kicker");
 
         // Servo 2 is optional
-        servo2 = hardwareMap.tryGet(Servo.class, "SR");
+        servo2 = hardwareMap.tryGet(Servo.class, "pusher");
 
         if (servo2 == null) {
             useServo2 = false;

@@ -1,7 +1,7 @@
-package org.firstinspires.ftc.teamcode.TESTING;
+package org.firstinspires.ftc.teamcode;
 
-import static org.firstinspires.ftc.teamcode.SharedClasses.RobotHardware.Nectar_Size;
-import static org.firstinspires.ftc.teamcode.SharedClasses.RobotHardware.Pollen_Size;
+import static org.firstinspires.ftc.teamcode.SharedClasses.RobotHardware.kicker_Down;
+import static org.firstinspires.ftc.teamcode.SharedClasses.RobotHardware.kicker_Up;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
@@ -12,9 +12,9 @@ import org.firstinspires.ftc.teamcode.SharedClasses.MecanumDrive_Smooth;
 import org.firstinspires.ftc.teamcode.SharedClasses.RobotHardware;
 
 
-@TeleOp(name = "TeleOp", group = "Robot")
+@TeleOp(name = "Telep_Aiming", group = "Robot")
 //@Disabled
-public class TeleopNERDS extends OpMode {
+public class Teleop_HPH extends OpMode {
     //Import Hardware Class & Mecanum Drive Class
     RobotHardware robot = new RobotHardware();
     MecanumDrive_Smooth drive;
@@ -101,15 +101,16 @@ public class TeleopNERDS extends OpMode {
         else {
             robot.intake.setPower(0);
         }
-        /* Servos to Lift and Lower Arm to move elemnts into Flywheel
-        if (gamepad2.x && !gamepad2.left_bumper) {      // Lowered Position
-            robot.AL.setPosition(-0.9);
-            robot.AR.setPosition(-0.9);
+        if (gamepad2.x & !gamepad2.y){
+            robot.GeckoWheels.setPower(.75);
         }
-        if (gamepad2.y) {  // Raised Position
-            robot.AL.setPosition(0.25);
-            robot.AR.setPosition(0.25);
-        }*/
+        else if (gamepad2.y & !gamepad2.x){
+                robot.GeckoWheels.setPower(-.75);
+        }
+        else {
+            robot.GeckoWheels.setPower(0);
+        }
+
 /////////////////////////////////////////////////////////////////////////////////////
 //////////////////             Turret & Slider                      /////////////////////
 ///////////////////////////////////////////////////////////////////////////////////
@@ -129,14 +130,20 @@ public class TeleopNERDS extends OpMode {
         double turretPower = gamepad2.right_bumper && aim.valid ? aim.motorPower : 0.0;
         robot.turret.setPower(turretPower);
 
-        //Slider use gamepad 2 left Stick
-        if (gamepad2.dpad_right) {
-            robot.SR.setPosition(Nectar_Size);
-            robot.SL.setPosition(Nectar_Size);
+        //Kicker:
+        if (gamepad1.bWasPressed()){
+            robot.kicker.setPosition(kicker_Up);
         }
-        if (gamepad2.dpad_left){
-            robot.SR.setPosition(Pollen_Size);
-            robot.SL.setPosition(Pollen_Size);
+        if (gamepad1.bWasReleased()){
+            robot.kicker.setPosition(kicker_Down);
+        }
+
+
+        if (gamepad2.left_stick_button){
+            robot.turret.setPower(0.75);
+        }
+        else{
+            robot.turret.setPower(0);
         }
 
 
@@ -225,7 +232,7 @@ public class TeleopNERDS extends OpMode {
 
         // Slow mode while holding right trigger
         if (gamepad1.right_trigger > 0) {
-            drive.setMaxSpeed(0.10);
+            drive.setMaxSpeed(0.25);
         } else {
             drive.setMaxSpeed(1.0);
         }
@@ -275,7 +282,6 @@ public class TeleopNERDS extends OpMode {
     }
 
 ////////////////////////////////// ENTER FUNCTIONS HERE//////////////////////////////////////
-
 
 
 }//Closes Op Mode

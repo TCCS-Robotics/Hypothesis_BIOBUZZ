@@ -29,8 +29,9 @@ public class RobotHardware {
     //Servos -  Format  - public Servo name; -for position based servo - or public CRServo name; - for Continuous servo
     public CRServo intakeLeft; //Left Intake Wheel
     public CRServo intakeRight; //Right Intake Wheel
-    public Servo SL; // Right side of Slider for Pollen/Nectar Sizer
-    public Servo SR; // Right side of Slider for Pollen/Nectar Sizer
+    public Servo pusher; // Right side of Slider for Pollen/Nectar Sizer
+    public Servo kicker; // Right side of Slider for Pollen/Nectar Sizer
+
 
 
     //Sensors   FORMAT public Sensor Type name;
@@ -48,6 +49,10 @@ public class RobotHardware {
     //Position for Servos for Pollen and Nectar
     public static final double Nectar_Size = 0.48;
     public static final double Pollen_Size = 0.27;
+
+    //Position for Servos for Kicker
+    public static final double kicker_Down = 0.5;
+    public static final double kicker_Up = 0.05;
 
 
     //////////////////////////    INITIALIZE ALL HARDWARE    /////////////////////////////
@@ -73,8 +78,9 @@ public class RobotHardware {
         // Servos
         intakeLeft = hardwareMap.get(CRServo.class, "intakeLeft");
         intakeRight = hardwareMap.get(CRServo.class, "intakeRight");
-        SL = hardwareMap.get(Servo.class,"SL");
-        SR = hardwareMap.get(Servo.class,"SR");
+        pusher = hardwareMap.get(Servo.class,"pusher");
+        kicker = hardwareMap.get(Servo.class,"kicker");
+
 
 
 
@@ -89,11 +95,11 @@ public class RobotHardware {
 
         //////////////////////////    Drive Motor Configurations   /////////////////////////////
         // Drive Motor Directions
-        frontLeftDrive.setDirection(DcMotor.Direction.REVERSE);
-        backLeftDrive.setDirection(DcMotor.Direction.REVERSE);
+        frontLeftDrive.setDirection(DcMotor.Direction.FORWARD);
+        backLeftDrive.setDirection(DcMotor.Direction.FORWARD);
 
-        frontRightDrive.setDirection(DcMotor.Direction.FORWARD);
-        backRightDrive.setDirection(DcMotor.Direction.FORWARD);
+        frontRightDrive.setDirection(DcMotor.Direction.REVERSE);
+        backRightDrive.setDirection(DcMotor.Direction.REVERSE);
 
         // Brake Mode Behavior
         frontLeftDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
@@ -103,7 +109,7 @@ public class RobotHardware {
 
 
         //////////////////////////    Flywheel Configurations   /////////////////////////////
-        flywheel.setDirection(DcMotorSimple.Direction.FORWARD); // NEED TO CONFIRM THIS DIRECTION
+        flywheel.setDirection(DcMotorSimple.Direction.REVERSE); // NEED TO CONFIRM THIS DIRECTION
 
         //Set Brake Behavior - This allows the flywheel to gradually slow down instead of immediately breaking
         flywheel.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
@@ -136,7 +142,7 @@ public class RobotHardware {
 
 
         ///////////////////////    Gecko Wheel Lift Configurations   /////////////////////////
-        GeckoWheels.setDirection(DcMotorSimple.Direction.FORWARD);
+        GeckoWheels.setDirection(DcMotorSimple.Direction.REVERSE);
 
 
 
@@ -152,12 +158,13 @@ public class RobotHardware {
 
 
         //////////////////    Shooter Pollen/Nectar Configurations   //////////////////////
-        SL.setDirection(Servo.Direction.FORWARD);
-        SR.setDirection(Servo.Direction.REVERSE);
+        //pusher.setDirection(Servo.Direction.FORWARD);
 
-        SL.setPosition(Pollen_Size);  //Variables are up in static Variables
-        SR.setPosition(Pollen_Size);  //Variables are up in static Variables
+        //pusher.setPosition(Pollen_Size);  //Variables are up in static Variables
 
+        //////////////////    Kicker Configuration   //////////////////////
+        kicker.setDirection(Servo.Direction.FORWARD);
+        kicker.setPosition(kicker_Down);
 
 
 
